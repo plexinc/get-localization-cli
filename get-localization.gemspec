@@ -5,15 +5,20 @@ require 'get-localization/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "get-localization"
-  gem.version       = Get::Localization::VERSION
+  gem.version       = GetLocalization::VERSION
   gem.authors       = ["Schuyler Ullman"]
-  gem.email         = ["schuyler.ullman@gmail.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.email         = ["schuyler@plexapp.com"]
+  gem.summary       = %q{Command line tool to interact with Get Localization translations.}
+  gem.description   = %q{This gem provides a simple command line tool for working with translations through Get Localization.}
+  gem.homepage      = "http://github.com/sullman/get-localization"
 
   gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
+  gem.executables   = ["get-localization"]
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+
+  gem.add_dependency('thor')
+  gem.add_dependency('highline')
+  gem.add_dependency('json')
+  gem.add_dependency('multipart-post')
 end

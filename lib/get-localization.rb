@@ -1,7 +1,5 @@
 require "get-localization/version"
+require "get-localization/project"
 
-module Get
-  module Localization
-    # Your code goes here...
-  end
+module GetLocalization
 end

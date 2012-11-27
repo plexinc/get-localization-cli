@@ -1,5 +1,3 @@
-module Get
-  module Localization
-    VERSION = "0.0.1"
-  end
+module GetLocalization
+  VERSION = "0.0.1"
 end
