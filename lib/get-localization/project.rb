@@ -79,7 +79,9 @@ module GetLocalization
       File.open(local_path) do |f|
         request = Net::HTTP::Post::Multipart.new url.path, "file" => UploadIO.new(f, "text/plain", master_file)
         request.basic_auth @username, @password
-        response = Net::HTTP.start(url.host, url.port, :use_ssl => url.scheme == 'https') do |http|
+        conn = Net::HTTP.new(url.host, url.port)
+        conn.use_ssl = url.scheme == 'https'
+        response = conn.start do |http|
           http.request(request)
         end
         success = response.code == '200'
