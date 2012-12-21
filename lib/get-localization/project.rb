@@ -67,7 +67,14 @@ module GetLocalization
           # TODO: This is a hack because Get Localization incorrectly escapes apostrophes in JSON.
           # Hopefully GL will fix the issue, but if we really do need this we should probably be a bit more
           # careful than this gsub.
-          out_file.write(line.gsub(/\\'/, "'"))
+          # We also sometimes have translators accidentally insert a tab and GL doesn't escape
+          # the tab, resulting in invalid JSON. To get valid JSON we could replace it with \t,
+          # but so far there's no scenario where we want a tab, so we just remove them.
+          if local_path.end_with?('json')
+            line = line.gsub(/\\'/, "'").gsub(/\t/, "")
+          end
+
+          out_file.write(line)
         end
       end
     end
