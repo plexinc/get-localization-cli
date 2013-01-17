@@ -1,5 +1,6 @@
 require 'yaml'
 require 'open-uri'
+require 'pathname'
 require 'json'
 require 'net/http/post/multipart'
 
@@ -61,6 +62,7 @@ module GetLocalization
 
     def download(master_file, lang)
       local_path = @files[master_file][lang]
+      Pathname.new(local_path).parent.mkpath
       File.open(local_path, "wb") do |out_file|
         request = open_request("https://api.getlocalization.com/#{@project}/api/translations/file/#{master_file}/#{lang}/")
         request.each_line do |line|
