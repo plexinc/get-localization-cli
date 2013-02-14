@@ -73,6 +73,17 @@ module GetLocalization
       Pathname.new(local_path).parent.mkpath
       File.open(local_path, "wb") do |out_file|
         request = open_request("https://api.getlocalization.com/#{@project}/api/translations/file/#{master_file}/#{lang}/")
+
+        # For at least some iOS files, the encoding will be messed and treated
+        # as ASCII even though it's actually UTF-16. Make a modest effort at
+        # detecting UTF-16 streams and force the encoding. Actually use UTF-8
+        # for the downloaded file though.
+        first_byte = request.readbyte
+        request.rewind
+        if first_byte >= 0xfe
+          request.set_encoding('UTF-16', 'UTF-8')
+        end
+
         request.each_line do |line|
           # TODO: This is a hack because Get Localization incorrectly escapes apostrophes in JSON.
           # Hopefully GL will fix the issue, but if we really do need this we should probably be a bit more
