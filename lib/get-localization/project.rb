@@ -12,6 +12,14 @@ module GetLocalization
       @password = yaml['password']
       @project = yaml['project']
       @files = yaml['files'] || {}
+
+      # no is likely to mean Norwegian to us, but in YAML it means false if
+      # you forget to quote it. People are going to forget, help them out.
+      @files.each do |master_file, obj|
+        if obj.has_key? false
+          obj['no'] = obj.delete(false)
+        end
+      end
     end
 
     attr_writer :username, :password
