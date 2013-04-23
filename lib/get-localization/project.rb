@@ -2,6 +2,7 @@ require 'yaml'
 require 'open-uri'
 require 'pathname'
 require 'json'
+require 'net/https'
 require 'net/http/post/multipart'
 
 module GetLocalization
