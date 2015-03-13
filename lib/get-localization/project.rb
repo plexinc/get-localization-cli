@@ -24,7 +24,7 @@ module GetLocalization
     end
 
     attr_writer :username, :password
-    attr_reader :files
+    attr_reader :files, :last_error
 
     def master_files
       unless @master_files
@@ -114,6 +114,7 @@ module GetLocalization
           http.request(request)
         end
         success = response.code == '200'
+        @last_error = response.body unless success
       end
       success
     end

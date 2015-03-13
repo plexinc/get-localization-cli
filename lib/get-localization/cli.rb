@@ -79,6 +79,7 @@ module GetLocalization
           info "OK"
         else
           error "ERROR"
+          error project.last_error
         end
       end
     end
